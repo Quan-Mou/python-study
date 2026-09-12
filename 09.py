@@ -33,8 +33,9 @@ print(current_datetime)
 today = datetime.date.today()
 print(today)
 
+
 current_hour = datetime.time.hour()
 print(current_hour)
 
-
+datetime.datetime.now().
 
