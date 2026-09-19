@@ -1,0 +1,17 @@
+[project]
+name = "langchain-learning"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "QuanMou", email = "2312038309@qq.com" }
+]
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+langchain-learning = "langchain_learning:main"
+
+[build-system]
+requires = ["uv_build>=0.12.0,<0.13.0"]
+build-backend = "uv_build"
