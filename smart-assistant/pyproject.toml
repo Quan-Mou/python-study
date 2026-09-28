@@ -1,0 +1,25 @@
+[project]
+name = "smart-assistant"
+version = "0.1.0"
+description = "多功能智能助手：学习 LangChain 工具调用（天气查询/数学计算/时间查询/货币转换/信息搜索）"
+readme = "README.md"
+authors = [
+    { name = "QuanMou", email = "2312038309@qq.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "langchain>=1.4.2",
+    "langchain-deepseek>=1.1.0",
+    "langchain-openai>=1.6.2",
+    "python-dotenv>=1.2.3",
+    "rich",
+    "tzdata>=2025.2",
+]
+
+[project.scripts]
+# smart-assistant命令，执行它时就调用smart_assistant/main.py里的main()函数。
+smart-assistant = "smart_assistant.main:main"
+
+[build-system]
+requires = ["uv_build>=0.12.0,<0.13.0"]
+build-backend = "uv_build"
