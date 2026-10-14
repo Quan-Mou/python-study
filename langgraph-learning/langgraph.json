@@ -1,0 +1,8 @@
+{
+  "graphs": {
+    "creative-bot": "./src/langgraph_learning/server_graph.py:graph"
+  },
+  "dependencies": [
+    "."
+  ]
+}

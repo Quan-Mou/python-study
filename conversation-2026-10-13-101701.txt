@@ -1,0 +1,30 @@
+ ▐▛███▛█   Claude Code v2.1.296
+▝▜██████▀  glm-5.3-flash · API Usage Billing
+ ▝▝   ▝▝   D:\zqh-project\python-study
+
+
+> 你是用的是哪个模型？                                                          
+
+  Thought for 5s (ctrl+o to expand)
+
+● 我是 Claude Code 这个 CLI 工具，但底层驱动的模型是 GLM（由 Z.ai
+  训练），具体型号为 glm-5.3-flash。
+
+  也就是说：
+  - Agent 外壳：Claude Code（终端交互、工具调用等能力由它提供）
+  - 底层模型：GLM，不是 Anthropic 的 Claude 模型
+
+  有其他问题随时问我～
+
+✻ Baked for 6s · done 9月20日星期日 14:02
+
+> /model                                                                        
+  ⎿  Set model to glm-5.3-flash[1m] and saved as your default for new sessions
+
+> /skills 
+  ⎿  Skills dialog dismissed
+
+> /plugin                                                                       
+
+> /exit                                                                         
+  ⎿  Goodbye!
