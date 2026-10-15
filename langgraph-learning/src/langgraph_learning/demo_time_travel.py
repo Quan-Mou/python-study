@@ -14,7 +14,7 @@ Fork（分支）：
 import os
 from typing import TypedDict
 
-from IPython import display
+from IPython.display import display
 from dotenv import load_dotenv
 from langchain.chat_models import init_chat_model
 from langchain_core.messages import HumanMessage
@@ -120,7 +120,7 @@ with PostgresSaver.from_conn_string(DB_URL) as checkpointer:
     print("=" * 60)
     print("  初始执行：topic=猫")
     print("=" * 60)
-    graph.invoke({"topic": "猫"}, config=config)
+    graph.invoke({"topic": "猫"},  config=config)
 
     # ── 获取所有历史快照 ──
     history = list(graph.get_state_history(config))
@@ -146,8 +146,8 @@ with PostgresSaver.from_conn_string(DB_URL) as checkpointer:
         print(f"重放起点: topic={replay_source.values['topic']}, next={replay_source.next}")
         print("→ 从该 checkpoint 重新执行...\n")
         result = graph.invoke(
-            {"topic": replay_source.values["topic"]},
-            config=config,
+            None,
+            config=replay_source.config,
         )
         rprint("[green]重放结果:[/green]")
         rprint(result["final_output"][:200] + "...")
@@ -171,20 +171,28 @@ with PostgresSaver.from_conn_string(DB_URL) as checkpointer:
 
     if fork_source and fork_source.config["configurable"].get("checkpoint_id"):
         ckpt_id = fork_source.config["configurable"]["checkpoint_id"]
-
+        config["configurable"]["checkpoint_id"] = ckpt_id  # ← 加进去
+        print(f"config:{config}")
         print(f"Fork 起点 checkpoint_id: {ckpt_id}")
         print(f"当前 topic: {fork_source.values['topic']}")
         print("→ update_state: 把 topic 改为 '猫:金渐层（开分支）'...\n")
 
         # 直接改状态，绕过 node_change_topic
-        graph.update_state(
+        """
+            config参数主要覆盖的是checkpoint_id 指从哪里fork
+            values: 是要写入的State的内容
+            as_node:这次更新伪装成那个节点写的
+        """
+
+        # graph.update_state返回的是更新后的config，注意这个
+        fork_config = graph.update_state(
             config,
             {"topic": "猫:金渐层（开分支）"},
-            checkpoint_id=ckpt_id,  # ← 指定从哪个 checkpoint 改
+            # checkpoint_id=ckpt_id,  # ← 指定从哪个 checkpoint 改
         )
 
         # 从改写后的状态继续执行
-        result = graph.invoke(None, config=config)
+        result = graph.invoke(None, config=fork_config)
         rprint("[green]Fork 分支结果:[/green]")
         rprint(result["final_output"][:200] + "...")
 
