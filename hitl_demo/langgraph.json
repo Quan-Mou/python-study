@@ -1,8 +1,8 @@
 {
   "dependencies": ["."],
   "graphs": {
-    "graph": "./src/hitl_demo/agent.py:graph",
-     "chat_graph": "./src/hitl_demo/chat_agent.py:chat_graph"
+    "chat_graph": "./src/hitl_demo/chat_agent.py:chat_graph",
+    "graphA": "./src/hitl_demo/agent.py:graph"
   },
   "env": ".env"
 }
