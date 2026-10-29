@@ -1,0 +1,14 @@
+[project]
+name = "fastapi-user"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.162.0",
+    "pydantic-settings>=2.16.2",
+    "pymysql>=1.2.3",
+    "sqlalchemy>=2.1.6",
+    "uvicorn>=0.54.0",
+]
+
+[project.scripts]
+dev = "uvicorn app.main:app --host 127.0.0.1 --port 8081"
