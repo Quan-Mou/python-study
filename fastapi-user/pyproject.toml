@@ -11,4 +11,11 @@ dependencies = [
 ]
 
 [project.scripts]
-dev = "uvicorn app.main:app --host 127.0.0.1 --port 8081"
+dev = "app.run:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/app"]
