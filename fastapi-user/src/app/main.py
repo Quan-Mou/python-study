@@ -2,6 +2,8 @@ import logging
 import time
 
 from fastapi import FastAPI
+from pwdlib import PasswordHash
+from starlette.middleware.cors import CORSMiddleware
 
 from app.api.router import router
 from app.core.deps import engine
@@ -31,13 +33,17 @@ async def log_request(request:Request, call_next):
 
     duration = time.perf_counter() - start_time
 
-    logger.info(
-        request.method,
-        request.url,
-        response.status_code,
-        duration,
-    )
+    logger.info(f"{request.method} {request.url} {response.status_code} {duration:.3f}s")
     return response
+
+# 配置跨域中间件
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # 统一挂载汇总路由，加 /v1 前缀 → /v1/users/*

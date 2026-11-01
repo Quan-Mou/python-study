@@ -7,8 +7,8 @@ class UserRepository:
     def __init__(self,db:Session):
         self.db=db
 
-    def create_user(self,name,email) -> User:
-        user = User(name=name, email=email)
+    def create_user(self, name: str, email: str, hashed_password: str | None = None) -> User:
+        user = User(name=name, email=email, hashed_password=hashed_password)
         self.db.add(user)
         self.db.commit()
         # 刷新，拿到插入的user

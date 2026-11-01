@@ -4,8 +4,12 @@ from sqlalchemy.orm import sessionmaker, Session
 
 from app.core.config import app_settings
 
-# engine 是连接池，全项目共享一个实例（原来叫 session，容易和会话混淆）
-engine = create_engine(url=app_settings.database_url)
+# SQLAlchemy 内置日志：echo=True 时，所有生成的 SQL（含参数）都会打到 stdout
+# 也可用 logging 控制：sqlalchemy.engine 的 logger 设为 INFO，效果等同但更灵活（能接日志文件/格式化）
+# 二者只能开一个，同时开会重复打印两遍
+
+# echo=True：控制台直接打印每条
+engine = create_engine(url=app_settings.database_url, echo=True)
 
 SessionLocal = sessionmaker(bind=engine)
 
