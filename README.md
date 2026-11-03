@@ -43,3 +43,65 @@ uv run 01.py
 4. 调度其他已经就绪的协程
 5. 等待之前的任务完成后恢复执行
 
+
+
+异步操作数据库的并发问题：
+一个AsyncSession不能被多个并发任务共享，比如：
+async def main():
+   await asyncio.gather(
+        query_user(db),
+        query_order(db)
+    )
+
+两个协程同时使用一个session，可能导致事务冲突和并发错误。
+正确的方式是每个并发创建自己的session。
+~~~python
+async def query_user():
+    await with AsyncSessionLocal() as db:
+        pass
+    
+
+async def query_order():
+    await with AsyncSessionLocal() as db:
+        pass
+    
+    
+async def main():
+    await asyncio.gather(
+        query_user(),
+        query_order()
+    )
+
+~~~
+- Engine可以在应用内共享
+- async async_Sessionmaker可以在应用内共享
+- 每个独立请求或并发请求应该使用自己的AsyncSession
+- 不要将一个Session全局保存，然后供多个请求使用
+
+
+
+
+后台任务与生命周期：
+- BackgroundTask：请求返回后，再后台执行一些任务，不用等待返回在执行下一步
+- LifeSpan：管理FastAPI应用启动和关闭时的资源
+
+
+LifeSpan生命周期：
+- 数据库连接池
+- httpx异步客户端
+- Redis连接
+- AI模型客户端
+- 其他共享资源
+这些资源不应该在每个请求中都重复创建。
+每次重复创建会带来额外的创建和销毁开销
+合理的方式是：
+- 应用启动时初始化客户端
+- 各个请求复用客户端
+- 应用关闭时释放客户端
+
+使用asynccontextmanager实现LifeSpan
+
+
+
+
+
