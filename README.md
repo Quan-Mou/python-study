@@ -102,6 +102,61 @@ LifeSpan生命周期：
 使用asynccontextmanager实现LifeSpan
 
 
+pytest:python中的自动化框架
+在java中可能使用过junit，spring boot test
+
+
+
+流式响应：
+流式响应和json响应的区别：
+json响应：客户端需要等到响应数据准备好才能拿到完整json数据
+流式响应：客户端可以逐步接受生成的数据，而不必等待全部完成
+
+
+media_type:
+- text/plain :浏览器/客户端 这是文本类型，不做其他处理
+- application/json：浏览器/客户端知道这是json，可以直接解析成对象
+- text/event-stream
+
+SSE(Server-Send Events):服务端发送事件
+是一种基于http的服务器向客户端单向发送数据的机制
+- 基于HTTP
+- 数据以事件流的形式传输
+- 服务端向客户端持续推送数据
+- 通常使用 text/event-stream
+- 浏览器可以使用EventSource接收事件
+
+适合AI大模型回答、系统通知、实时任务进度、Agent任务过程展示
+
+
+SSE和Websocket不一样：
+- sse是服务端向客户端单向推送数据，websocket支持双向通信
+
+
+SSE适合服务器单向推送，如果服务器和客户端都需要发送消息，则需要使用Websocket
+- 实时通讯
+- 在线客服
+- 实时协作
+- 双向实时控制
+- 实时语音交互
+
+HTTP：请求/响应，通常请求结束后关闭
+SSE:服务器端单向推送，持续HTTP连接
+Websocket：双向通信，持续连接
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
