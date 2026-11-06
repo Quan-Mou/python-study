@@ -146,6 +146,41 @@ Websocket：双向通信，持续连接
 
 
 
+MCP：Model Context Protocol 模型上下文协议
+
+使用python MCP SDK 定义MCP服务
+@mcp.tool() 装饰器会把一个普通py函数注册为MCP tool。
+会根据函数签名生成 schema。
+~~~json
+{
+  "name": "query_company",
+  "description": "根据企业名称查询企业信息",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "company_name": "str"
+    }
+  },
+  "required": ["company_name"]
+}
+~~~
+
+有了这些信息，MCP Client 就知道有哪些工具，什么作用，传哪些参数，参数类型等
+
+
+整体流程：
+1. Langchain 创建MCP Client
+2. MCP Client 连接 MCP Server
+3. Client 获取 Server暴露的工具列表
+4. 将MCP Tools 转换为 LangChain Tools
+5. 讲这些Tools 注入到 Agent
+6. 用户提问，LLM判断是否需要调用工具
+7. LangChain执行工具，获取MCP Server返回的数据
+8. LLL根据工具结果生成最终答案
+
+stdio：
+- standard input ：标准输入 stdin
+- standard output：标准输出 stdout
 
 
 
